@@ -3,7 +3,7 @@
 import { useState, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, ArrowLeft } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Home } from 'lucide-react'
 import { behaviors } from '@/data/behaviors'
 import { abcFunctions } from '@/data/analysis'
 import StepIndicator from '@/components/StepIndicator'
@@ -53,6 +53,8 @@ function ABCForm() {
     router.push(`/result/?${params.toString()}`)
   }
 
+  const canProceed = step === 0 ? selectedBehaviors.length > 0 : true
+
   return (
     <div className="space-y-6">
       <StepIndicator currentStep={step} totalSteps={5} labels={steps} />
@@ -60,18 +62,19 @@ function ABCForm() {
       {step === 0 && (
         <div className="space-y-4">
           <h2 className="text-lg font-bold text-earth-500">選擇要分析的行為</h2>
+          <p className="text-sm text-earth-400">請選擇一個或多個您想了解的問題行為</p>
           <div className="grid gap-2">
             {behaviors.map(b => (
               <label key={b.id} className="flex items-center gap-3 p-3 bg-white rounded-lg border border-earth-200 cursor-pointer hover:border-warm-300 transition-colors">
                 <input
                   type="checkbox"
-                  className="w-5 h-5 accent-warm-500"
+                  className="w-5 h-5 accent-warm-500 shrink-0"
                   checked={selectedBehaviors.includes(b.id)}
                   onChange={() => setSelectedBehaviors(prev =>
                     prev.includes(b.id) ? prev.filter(x => x !== b.id) : [...prev, b.id]
                   )}
                 />
-                <span className="text-xl">{b.emoji}</span>
+                <span className="text-xl shrink-0">{b.emoji}</span>
                 <span className="text-sm font-medium text-earth-500">{b.name}</span>
               </label>
             ))}
@@ -166,7 +169,7 @@ function ABCForm() {
                   onClick={() => setAnswers(prev => ({ ...prev, functionId: fn.id }))}
                   className={`text-left p-3 rounded-lg border text-sm transition-colors flex items-center gap-2 ${answers.functionId === fn.id ? 'bg-warm-50 border-warm-400 text-warm-700 font-medium' : 'bg-white border-earth-200 hover:border-warm-300 text-earth-500'}`}
                 >
-                  <span>{fn.icon}</span>
+                  <span className="shrink-0">{fn.icon}</span>
                   <span>{fn.name}</span>
                 </button>
               ))}
@@ -183,14 +186,28 @@ function ABCForm() {
         </div>
       )}
 
-      <div className="flex justify-between pt-2">
+      {/* Bottom Navigation */}
+      <div className="flex items-center justify-between pt-4 border-t border-earth-100">
         {step > 0 ? (
-          <button onClick={prevStep} className="flex items-center gap-1 text-sm text-earth-400 hover:text-earth-500">
+          <button onClick={prevStep} className="flex items-center gap-1.5 text-sm text-earth-400 hover:text-earth-500 px-3 py-2 rounded-lg hover:bg-earth-100 transition-colors">
             <ArrowLeft size={16} /> 上一步
           </button>
-        ) : <div />}
-        {step < 4 && step > 0 && (
-          <button onClick={nextStep} className="flex items-center gap-1 text-sm text-warm-600 font-medium hover:text-warm-700">
+        ) : (
+          <Link href="/" className="flex items-center gap-1.5 text-sm text-earth-400 hover:text-earth-500 px-3 py-2 rounded-lg hover:bg-earth-100 transition-colors">
+            <Home size={16} /> 回首頁
+          </Link>
+        )}
+
+        {step < 4 && (
+          <button
+            onClick={nextStep}
+            disabled={!canProceed}
+            className={`flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg transition-colors ${
+              canProceed
+                ? 'bg-warm-500 text-white hover:bg-warm-600'
+                : 'bg-earth-200 text-earth-400 cursor-not-allowed'
+            }`}
+          >
             下一步 <ArrowRight size={16} />
           </button>
         )}
