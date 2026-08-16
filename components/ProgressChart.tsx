@@ -21,9 +21,10 @@ interface Record {
 
 interface Props {
   records: Record[]
+  title?: string
 }
 
-export default function ProgressChart({ records }: Props) {
+export default function ProgressChart({ records, title }: Props) {
   const data = useMemo(() => {
     return [...records]
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -36,14 +37,14 @@ export default function ProgressChart({ records }: Props) {
   if (records.length === 0) {
     return (
       <div className="bg-white rounded-xl border border-earth-200 p-8 text-center">
-        <p className="text-earth-400">尚無資料，請先新增記錄</p>
+        <p className="text-earth-400">{title ? `${title} — ` : ''}尚無資料，請先新增記錄</p>
       </div>
     )
   }
 
   return (
     <div className="bg-white rounded-xl border border-earth-200 p-4">
-      <h3 className="font-bold text-earth-500 mb-4">趨勢圖表</h3>
+      <h3 className="font-bold text-earth-500 mb-4">{title || '趨勢圖表'}</h3>
       <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
