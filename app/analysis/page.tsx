@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Search, Zap } from 'lucide-react'
 import { abcFunctions, nineCauses } from '@/data/analysis'
 import AnalysisCard from '@/components/AnalysisCard'
 
@@ -9,31 +10,43 @@ export default function AnalysisPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-xl font-bold text-earth-500">行為分析工具</h1>
-        <p className="text-sm text-earth-400 mt-1">用 ABC 找出行為功能，用九大成因層次完整檢視</p>
+      <div className="text-center">
+        <div className="inline-flex items-center gap-2 bg-white/80 rounded-full px-4 py-2 border-2 border-pink-100 shadow-soft mb-3">
+          <Search size={16} className="text-pink-400" />
+          <span className="text-xs font-extrabold text-pink-500">科學行為分析</span>
+        </div>
+        <h1 className="text-2xl font-black text-ink-800">行為分析工具</h1>
+        <p className="text-sm text-ink-400 font-semibold mt-1">用 ABC 找出行為功能，用九大成因層次完整檢視</p>
       </div>
 
-      <div className="flex rounded-xl bg-white border border-earth-200 p-1">
+      <div className="flex rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-pink-100 p-1.5 shadow-soft">
         <button
           onClick={() => setTab('abc')}
-          className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-colors ${tab === 'abc' ? 'bg-warm-500 text-white' : 'text-earth-500 hover:bg-earth-100'}`}
+          className={`flex-1 py-3 text-sm font-extrabold rounded-2xl transition-all duration-200 ${
+            tab === 'abc'
+              ? 'bg-gradient-pink text-white shadow-soft'
+              : 'text-ink-500 hover:bg-pink-50 hover:text-pink-500'
+          }`}
         >
-          ABC 行為功能
+          🔍 ABC 行為功能
         </button>
         <button
           onClick={() => setTab('causes')}
-          className={`flex-1 py-2.5 text-sm font-medium rounded-lg transition-colors ${tab === 'causes' ? 'bg-forest-500 text-white' : 'text-earth-500 hover:bg-earth-100'}`}
+          className={`flex-1 py-3 text-sm font-extrabold rounded-2xl transition-all duration-200 ${
+            tab === 'causes'
+              ? 'bg-gradient-mint text-white shadow-mint'
+              : 'text-ink-500 hover:bg-mint-50 hover:text-mint-500'
+          }`}
         >
-          九大成因
+          📋 九大成因
         </button>
       </div>
 
       {tab === 'abc' && (
-        <div className="space-y-3">
-          <div className="bg-warm-50 rounded-xl border border-warm-200 p-4">
-            <h2 className="font-bold text-warm-700 mb-1">ABC 分析核心</h2>
-            <p className="text-sm text-warm-600 leading-relaxed">
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-pink-50 to-lavender-50 rounded-3xl border-2 border-pink-100 p-5 shadow-soft">
+            <h2 className="font-extrabold text-pink-700 mb-2 text-lg">🔍 ABC 分析核心</h2>
+            <p className="text-sm text-ink-600 leading-relaxed font-semibold">
               A（Antecedent）前事：行為發生前出現了什麼？<br/>
               B（Behavior）行為：狗狗具體做了什麼？<br/>
               C（Consequence）後果：行為發生後，狗狗得到了什麼、逃離了什麼？
@@ -46,10 +59,10 @@ export default function AnalysisPage() {
       )}
 
       {tab === 'causes' && (
-        <div className="space-y-3">
-          <div className="bg-forest-50 rounded-xl border border-forest-200 p-4">
-            <h2 className="font-bold text-forest-700 mb-1">九大成因層次檢查</h2>
-            <p className="text-sm text-forest-600 leading-relaxed">
+        <div className="space-y-4">
+          <div className="bg-gradient-to-r from-mint-50 to-lavender-50 rounded-3xl border-2 border-mint-100 p-5 shadow-soft">
+            <h2 className="font-extrabold text-mint-700 mb-2 text-lg">📋 九大成因層次檢查</h2>
+            <p className="text-sm text-ink-600 leading-relaxed font-semibold">
               狗狗行為通常不是單一原因，而是多層因素疊加。如果你只找到一個原因，通常代表分析還不夠完整。
             </p>
           </div>
