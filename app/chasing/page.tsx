@@ -6,12 +6,12 @@ import { getStrategies } from '@/data/strategies'
 import { techniques } from '@/data/techniques'
 
 export const metadata: Metadata = {
-  title: '🐕 狗狗吠叫怎麼辦？完整行為分析與訓練對策',
-  description: '狗狗過度吠叫的原因分析與專業訓練對策，從ABC行為分析到具體訓練步驟，幫助您改善狗狗吠叫問題。',
+  title: '🐕 狗狗追車怎麼辦？追逐行為分析與安全訓練對策',
+  description: '改善狗狗追車與追逐行為，了解高驅力管理與替代出口訓練，確保狗狗與他人的安全。',
 }
 
-const behavior = behaviors.find(b => b.id === 'barking')!
-const strategies = getStrategies('barking')
+const behavior = behaviors.find(b => b.id === 'chasing')!
+const strategies = getStrategies('chasing')
 
 export default function Page() {
   return (
